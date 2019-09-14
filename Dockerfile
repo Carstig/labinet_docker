@@ -9,7 +9,7 @@ LABEL maintainer="carstig@yahoo.de"
 
 RUN apt-get update
 
-RUN apt-get install -y protobuf-compiler \
+RUN apt-get install -y git protobuf-compiler \
   build-essential cmake pkg-config
   
 
@@ -38,10 +38,14 @@ RUN pip3 install jupyter
 
 RUN pip3 install matplotlib numpy pandas utils requests
 
+WORKDIR /home/docker/labinet_work/
+RUN git clone --depth 1 https://github.com/cocodataset/cocoapi.git
+
 # install tensorflow models package
-WORKDIR /home/docker/labinet_work/tensorflow-models/research
+RUN git clone --depth 1 https://github.com/tensorflow/models tensorflow-models
+WORKDIR ./tensorflow-models/research
 RUN echo "export PYTHONPATH=${PYTHONPATH}:`pwd`:`pwd`/object_detection:`pwd`/slim" >> ~/.bashrc#
-#
+
 RUN python3 setup.py build
 RUN python3 setup.py install
 
