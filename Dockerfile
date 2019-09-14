@@ -10,7 +10,7 @@ LABEL maintainer="carstig@yahoo.de"
 RUN apt-get update
 
 RUN apt-get install -y git protobuf-compiler \
-  build-essential cmake pkg-config
+  build-essential cmake nano pkg-config
   
 
 # stuff probably not needed
@@ -44,7 +44,9 @@ RUN git clone --depth 1 https://github.com/cocodataset/cocoapi.git
 # install tensorflow models package
 RUN git clone --depth 1 https://github.com/tensorflow/models tensorflow-models
 WORKDIR ./tensorflow-models/research
-RUN echo "export PYTHONPATH=${PYTHONPATH}:`pwd`:`pwd`/object_detection:`pwd`/slim" >> ~/.bashrc#
+RUN echo "export PYTHONPATH=${PYTHONPATH}:`pwd`:`pwd`/object_detection:`pwd`/slim" >> /.bashrc
+RUN export PYTHONPATH=${PYTHONPATH}:`pwd`:`pwd`/object_detection:`pwd`/slim
+RUN source /.bashrc
 
 RUN python3 setup.py build
 RUN python3 setup.py install
@@ -53,6 +55,8 @@ WORKDIR /home/docker/labinet_work/cocoapi/PythonAPI
 RUN make
 
 CMD ["echo", "Running tensorflow docker"]
+
+WORKDIR /home/docker/labinet_work/tensorflow-models/research/object_detection
 
 # TODO working files : images, data, training dir (config) and dir where to put training results 
 # 
