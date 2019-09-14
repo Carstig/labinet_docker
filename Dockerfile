@@ -9,7 +9,7 @@ LABEL maintainer="carstig@yahoo.de"
 
 RUN apt-get update
 
-RUN apt-get install -y git protobuf-compiler \
+RUN apt-get install -y git python3-protobuf protobuf-compiler \
   build-essential cmake nano pkg-config
   
 
@@ -53,6 +53,11 @@ RUN python3 setup.py install
 
 WORKDIR /home/docker/labinet_work/cocoapi/PythonAPI
 RUN make
+# if pycocotools are then not found... use:
+#RUN curl -OL https://github.com/google/protobuf/releases/download/v3.2.0/protoc-3.2.0-linux-x86_64.zip
+#RUN unzip protoc-3.2.0-linux-x86_64.zip -d protoc3
+#RUN mv protoc3/bin/* /usr/local/bin/
+#RUN mv protoc3/include/* /usr/local/include/
 
 CMD ["echo", "Running tensorflow docker"]
 
