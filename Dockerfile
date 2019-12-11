@@ -5,7 +5,7 @@ FROM tensorflow/tensorflow:latest-gpu-py3
 LABEL maintainer="carstig@yahoo.de"
 
 RUN apt-get update && yes | apt-get upgrade
-RUN apt-get install -y git python-pip protobuf-compiler python-pil python-lxml python3-protobuf build-essential cmake nano pkg-config
+RUN apt-get install -y git python-dev python-pip protobuf-compiler python-pil python-lxml python3-protobuf build-essential cmake nano pkg-config
 RUN pip install --upgrade pip
   
 
@@ -19,7 +19,7 @@ RUN pip install --upgrade pip
 #   python3-jupyter-client 
 #   python3-ipykernel
 
-RUN pip install jupyter matplotlib numpy pandas utils requests
+RUN pip install jupyter matplotlib numpy pandas utils requests pillow
 
 # hangs? fails with Terminal input (use value : 8 for Europe)
 #RUN apt-get install -y \
