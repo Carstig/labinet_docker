@@ -7,29 +7,16 @@ LABEL maintainer="carstig@yahoo.de"
 RUN apt-get update && yes | apt-get upgrade
 RUN apt-get install -y git python-dev python-pip protobuf-compiler python-pil python-lxml python3-protobuf build-essential cmake nano pkg-config
 RUN pip install --upgrade pip
-  
-
-#RUN apt-get install -y \
-#  python3-lxml \
-#  python3-pil
-
-#   python3-notebook 
-#   python3-jupyter-console 
-#   python3-jupyter-core 
-#   python3-jupyter-client 
-#   python3-ipykernel
 
 RUN pip install jupyter matplotlib numpy pandas utils requests pillow
-
-# hangs? fails with Terminal input (use value : 8 for Europe)
-#RUN apt-get install -y \
-#  python3-opencv
-# RUN pip install opencv-python==3.4.0.12 requests
-
 
 ADD . /home/docker/labinet_work
 # change to tensorflow dir
 WORKDIR /home/docker/labinet_work/
+
+
+# I decided to _not_ clone tensorflow-models and rather consider this as a workdir
+# updated also via external work
 
 #RUN git clone --depth 1 https://github.com/cocodataset/cocoapi.git
 
@@ -37,11 +24,9 @@ WORKDIR /home/docker/labinet_work/
 #RUN git clone --depth 1 https://github.com/tensorflow/models tensorflow-models
 #WORKDIR /home/docker/labinet_work/tensorflow-models/research
 #RUN echo "export PYTHONPATH=${PYTHONPATH}:`pwd`:`pwd`/object_detection:`pwd`/slim" >> /.bashrc
-#RUN export PYTHONPATH=${PYTHONPATH}:`pwd`:`pwd`/object_detection:`pwd`/slim
+#>>> we still need this >>> RUN export PYTHONPATH=${PYTHONPATH}:`pwd`:`pwd`/object_detection:`pwd`/slim
 #RUN source /.bashrc
-
 #RUN protoc object_detection/protos/*.proto --python_out=.
-
 #RUN python3 setup.py build
 #RUN python3 setup.py install
 
@@ -56,8 +41,5 @@ WORKDIR /home/docker/labinet_work/
 
 CMD ["echo", "Running tensorflow docker"]
 
-#WORKDIR /home/docker/labinet_work/tensorflow-models/research/object_detection
+# now done via --mount: WORKDIR /home/docker/labinet_work/tensorflow-models/research/object_detection
 WORKDIR /home/docker/
-
-# TODO working files : images, data, training dir (config) and dir where to put training results 
-# 
