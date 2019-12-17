@@ -73,6 +73,7 @@ From within the container you can run:
 ```
 cd object_detection/tensorflow-models/research
 export PYTHONPATH=${PYTHONPATH}:`pwd`:`pwd`/object_detection:`pwd`/slim
+cd -
 cd object_detection/labinet/notebook
 jupyter notebook --ip=0.0.0.0 --port=8888 --allow-root
 ```
